@@ -3,6 +3,8 @@ package com.tromaya.todo_list.domain.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -20,10 +22,99 @@ public class TaskList {
     @Column(name = "description")
     private String description;
 
+    @OneToMany(mappedBy = "taskList", cascade = {
+            CascadeType.REMOVE, CascadeType.PERSIST // CascadeType.REMOVE: when we delete a tasklist all the tasks will be deleted too
+                                                    // CascadeType.PERSIST: when we save a tasklist any new task it contains will be saved too
+    }) // one task-list to many tasks
+    private List<Task> tasks;
+
     @Column(name = "created", nullable = false)
     private LocalDateTime createdDate;
 
     @Column(name = "updated", nullable = false)
     private LocalDateTime updatedDate;
 
+    public TaskList() {
+    }
+
+    public TaskList(LocalDateTime createdDate, UUID id, String title, String description, List<Task> tasks, LocalDateTime updatedDate) {
+        this.createdDate = createdDate;
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.tasks = tasks;
+        this.updatedDate = updatedDate;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TaskList taskList = (TaskList) o;
+        return Objects.equals(id, taskList.id) && Objects.equals(title, taskList.title) && Objects.equals(description, taskList.description) && Objects.equals(tasks, taskList.tasks) && Objects.equals(createdDate, taskList.createdDate) && Objects.equals(updatedDate, taskList.updatedDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, tasks, createdDate, updatedDate);
+    }
+
+    @Override
+    public String toString() {
+        return "TaskList{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", tasks=" + tasks +
+                ", createdDate=" + createdDate +
+                ", updatedDate=" + updatedDate +
+                '}';
+    }
 }
