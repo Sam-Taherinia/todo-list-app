@@ -5,7 +5,7 @@ import com.tromaya.todo_list.domain.entities.Task;
 import com.tromaya.todo_list.mappers.TaskMapper;
 import org.springframework.stereotype.Component;
 
-@Component()
+@Component
 public class TaskMapperImpl implements TaskMapper {
 
     @Override
