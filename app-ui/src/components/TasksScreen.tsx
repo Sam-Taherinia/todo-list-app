@@ -26,7 +26,7 @@ const TaskListScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Find task list directly from state instead of maintaining separate state
+  // Find ToDo list directly from state instead of maintaining separate state
   const taskList = state.taskLists.find((tl) => listId === tl.id);
 
   // Single useEffect to handle all initial data loading
@@ -36,7 +36,7 @@ const TaskListScreen: React.FC = () => {
 
       setIsLoading(true);
       try {
-        // Only fetch if we don't already have the task list
+        // Only fetch if we don't already have the ToDo list
         if (!taskList) {
           await api.getTaskList(listId);
         }
@@ -48,7 +48,7 @@ const TaskListScreen: React.FC = () => {
           console.log("Tasks not available yet");
         }
       } catch (error) {
-        console.error("Error loading task list:", error);
+        console.error("Error loading ToDo list:", error);
       } finally {
         setIsLoading(false);
       }
@@ -151,19 +151,19 @@ const TaskListScreen: React.FC = () => {
         <div className="flex w-full items-center justify-between">
           <Button
             variant="ghost"
-            aria-label="Go back to Task Lists"
+            aria-label="Go back to ToDo Lists"
             onClick={() => navigate("/")}
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
 
           <h1 className="text-2xl font-bold mx-4">
-            {taskList ? taskList.title : "Unknown Task List"}
+            {taskList ? taskList.title : "Unknown ToDo List"}
           </h1>
 
           <Button
             variant="ghost"
-            aria-label={`Edit task list`}
+            aria-label={`Edit ToDo list`}
             onClick={() => navigate(`/edit-task-list/${listId}`)}
           >
             <Edit className="h-4 w-4" />
@@ -201,7 +201,7 @@ const TaskListScreen: React.FC = () => {
           color="danger"
           startContent={<Minus size={20} />}
           onClick={deleteTaskList}
-          aria-label="Delete current task list"
+          aria-label="Delete current ToDo list"
         >
           Delete TaskList
         </Button>

@@ -31,7 +31,7 @@ const CreateUpdateTaskListScreen: React.FC = () => {
   const populateTaskList = (taskListId: string) => {
     const taskList = findTaskList(taskListId);
     if (null != taskList) {
-      console.log("FOUND TASK LIST");
+      console.log("FOUND ToDo LIST");
       setTitle(taskList.title);
       setDescription(taskList.description);
       setIsUpdate(true);
@@ -42,7 +42,7 @@ const CreateUpdateTaskListScreen: React.FC = () => {
     if (null != listId) {
       console.log(`ID is ${listId}`);
       if (null == state.taskLists) {
-        console.log("Fetching task lists");
+        console.log("Fetching ToDo lists");
         api.fetchTaskLists().then(() => populateTaskList(listId));
       } else {
         populateTaskList(listId);
@@ -93,14 +93,14 @@ const CreateUpdateTaskListScreen: React.FC = () => {
           <ArrowLeft size={20} />
         </Button>
         <h1 className="text-2xl font-bold">
-          {isUpdate ? "Update Task List" : "Create Task List"}
+          {isUpdate ? "Update ToDo List" : "Create ToDo List"}
         </h1>
       </div>
       {error.length > 0 && <Card>{error}</Card>}
       <form onSubmit={handleSubmit}>
         <Input
           label="Title"
-          placeholder="Enter task list title"
+          placeholder="Enter ToDo list title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
@@ -109,14 +109,14 @@ const CreateUpdateTaskListScreen: React.FC = () => {
         <Spacer y={1} />
         <Textarea
           label="Description"
-          placeholder="Enter task list description (optional)"
+          placeholder="Enter ToDo list description (optional)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           fullWidth
         />
         <Spacer y={1} />
         <Button type="submit" color="primary" onClick={createUpdateTaskList}>
-          {isUpdate ? "Update Task List" : "Create Task List"}
+          {isUpdate ? "Update ToDo List" : "Create ToDo List"}
         </Button>
       </form>
     </div>

@@ -4,9 +4,10 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is the frontend UI for a ToDo list web application built with React, TypeScript, and Vite. The application provides a modern, responsive interface for managing task lists and individual tasks, with a clean architecture that communicates with a Spring Boot backend via REST APIs.
+This is the frontend UI for a ToDo list web application built with React, TypeScript, and Vite. The application provides a modern, responsive interface for managing ToDo lists and individual tasks, with a clean architecture that communicates with a Spring Boot backend via REST APIs.
 
 **Technology Stack:**
+
 - React 18 with TypeScript
 - Vite for build tooling and development server
 - NextUI for component library
@@ -17,6 +18,7 @@ This is the frontend UI for a ToDo list web application built with React, TypeSc
 - Lucide React for icons
 
 **UI Framework:**
+
 - **NextUI**: Modern React UI library providing pre-built components
 - **Tailwind CSS**: Utility-first CSS framework for styling
 - **Framer Motion**: Animation library for smooth transitions
@@ -26,36 +28,42 @@ This is the frontend UI for a ToDo list web application built with React, TypeSc
 The application follows a well-structured React architecture with clear separation of concerns:
 
 ### Core Components
+
 - **App.tsx**: Main application component with React Router configuration
 - **AppProvider.tsx**: Global state management using React Context and useReducer
 - **Components**: Screen-based components for different views
 
 ### Domain Models (TypeScript Interfaces/Enums)
+
 - **Task**: Core task entity with title, description, due date, priority, and status
 - **TaskList**: Container for tasks with metadata (title, description, progress tracking)
 - **TaskPriority**: Enum for HIGH, MEDIUM, LOW priorities
 - **TaskStatus**: Enum for OPEN, CLOSED states
 
 ### State Management Architecture
+
 - **React Context + useReducer**: Global state management pattern
 - **Action-based updates**: Dispatched actions for all state mutations
 - **API integration**: Axios-based HTTP client with automatic state synchronization
 - **Local state caching**: Tasks organized by taskListId for efficient access
 
 ### Component Structure
-- **TaskListsScreen**: Main dashboard showing all task lists
-- **TasksScreen**: Individual task list view showing tasks
-- **CreateUpdateTaskListScreen**: Form for creating/editing task lists
+
+- **TaskListsScreen**: Main dashboard showing all ToDo lists
+- **TasksScreen**: Individual ToDo list view showing tasks
+- **CreateUpdateTaskListScreen**: Form for creating/editing ToDo lists
 - **CreateUpdateTaskScreen**: Form for creating/editing individual tasks
 
 ### API Integration
-- **REST API communication**: Full CRUD operations for both task lists and tasks
+
+- **REST API communication**: Full CRUD operations for both ToDo lists and tasks
 - **Proxy configuration**: Vite dev server proxies `/api` requests to `http://localhost:8080`
 - **Automatic state sync**: API calls automatically update global state via reducer actions
 
 ## Development Commands
 
 ### Setup & Installation
+
 ```powershell
 # Install dependencies
 npm install
@@ -66,6 +74,7 @@ npm install
 ```
 
 ### Development
+
 ```powershell
 # Start development server (with HMR)
 npm run dev
@@ -75,6 +84,7 @@ npm run dev
 ```
 
 ### Build & Preview
+
 ```powershell
 # Build for production
 npm run build
@@ -87,6 +97,7 @@ npx tsc --noEmit
 ```
 
 ### Code Quality
+
 ```powershell
 # Run ESLint
 npm run lint
@@ -99,6 +110,7 @@ npm run format
 ```
 
 ### Testing
+
 ```powershell
 # Run tests (when test framework is added)
 npm test
@@ -118,18 +130,21 @@ npm test -- --watch
 ## Development Workflow
 
 ### Backend Dependency
+
 The frontend requires the Spring Boot backend to be running on `http://localhost:8080` for full functionality. The Vite dev server is configured to proxy API requests automatically.
 
 ### State Management Pattern
+
 1. **Actions**: All state changes go through dispatched actions
 2. **API Calls**: Automatically trigger state updates via reducer
 3. **Context**: Global state accessible via `useAppContext()` hook
 4. **Local Caching**: Tasks cached by taskListId for performance
 
 ### Routing Structure
-- `/` - Task lists dashboard
-- `/new-task-list` - Create new task list
-- `/edit-task-list/:listId` - Edit existing task list  
+
+- `/` - ToDo lists dashboard
+- `/new-task-list` - Create new ToDo list
+- `/edit-task-list/:listId` - Edit existing ToDo list
 - `/task-lists/:listId` - View tasks in a specific list
 - `/task-lists/:listId/new-task` - Create new task in list
 - `/task-lists/:listId/edit-task/:taskId` - Edit specific task
@@ -138,14 +153,16 @@ The frontend requires the Spring Boot backend to be running on `http://localhost
 
 The frontend expects these REST API endpoints from the backend:
 
-### Task Lists
-- `GET /api/task-lists` - Fetch all task lists
-- `GET /api/task-lists/:id` - Get specific task list
-- `POST /api/task-lists` - Create new task list
-- `PUT /api/task-lists/:id` - Update task list
-- `DELETE /api/task-lists/:id` - Delete task list
+### ToDo Lists
+
+- `GET /api/task-lists` - Fetch all ToDo lists
+- `GET /api/task-lists/:id` - Get specific ToDo list
+- `POST /api/task-lists` - Create new ToDo list
+- `PUT /api/task-lists/:id` - Update ToDo list
+- `DELETE /api/task-lists/:id` - Delete ToDo list
 
 ### Tasks
+
 - `GET /api/task-lists/:listId/tasks` - Fetch tasks in a list
 - `GET /api/task-lists/:listId/tasks/:taskId` - Get specific task
 - `POST /api/task-lists/:listId/tasks` - Create new task

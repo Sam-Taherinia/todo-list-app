@@ -34,21 +34,21 @@ const CreateUpdateTaskScreen: React.FC = () => {
       setIsLoading(true);
       try {
         console.log("Loading initial data...");
-        
-        // First ensure we have the task list
-        if (!state.taskLists.find(tl => tl.id === listId)) {
+
+        // First ensure we have the ToDo list
+        if (!state.taskLists.find((tl) => tl.id === listId)) {
           await api.getTaskList(listId);
         }
 
         // Load the individual task
         const taskResponse = await api.getTask(listId, taskId);
         console.log("Task loaded:", taskResponse);
-        
+
         // Check state after loading
         console.log("Current state after load:", state);
-        
+
         // Get task from state
-        const task = state.tasks[listId]?.find(t => t.id === taskId);
+        const task = state.tasks[listId]?.find((t) => t.id === taskId);
         console.log("Found task in state:", task);
 
         if (task) {
@@ -79,9 +79,9 @@ const CreateUpdateTaskScreen: React.FC = () => {
   // Watch for task updates in state
   useEffect(() => {
     if (listId && taskId && state.tasks[listId]) {
-      const task = state.tasks[listId].find(t => t.id === taskId);
+      const task = state.tasks[listId].find((t) => t.id === taskId);
       console.log("State updated, current task:", task);
-      
+
       if (task) {
         console.log("Updating form with task from state update:", task);
         setTitle(task.title);
@@ -132,7 +132,7 @@ const CreateUpdateTaskScreen: React.FC = () => {
 
   const formatDateForPicker = (date: Date | undefined) => {
     if (!date) return undefined;
-    return date.toISOString().split('T')[0];
+    return date.toISOString().split("T")[0];
   };
 
   if (isLoading) {
@@ -142,7 +142,7 @@ const CreateUpdateTaskScreen: React.FC = () => {
   return (
     <div className="p-4 max-w-md mx-auto">
       <div className="flex items-center space-x-4 mb-6">
-        <Button 
+        <Button
           variant="ghost"
           aria-label="Go back"
           onClick={() => navigate(`/task-lists/${listId}`)}
@@ -174,8 +174,12 @@ const CreateUpdateTaskScreen: React.FC = () => {
         <Spacer y={1} />
         <DatePicker
           label="Due date (optional)"
-          defaultValue={dueDate ? parseDate(formatDateForPicker(dueDate)!) : undefined}
-          onChange={(newDate) => handleDateChange(newDate ? new Date(newDate.toString()) : null)}
+          defaultValue={
+            dueDate ? parseDate(formatDateForPicker(dueDate)!) : undefined
+          }
+          onChange={(newDate) =>
+            handleDateChange(newDate ? new Date(newDate.toString()) : null)
+          }
         />
         <Spacer y={4} />
         <div className="flex justify-between mx-auto gap-2">
@@ -192,9 +196,9 @@ const CreateUpdateTaskScreen: React.FC = () => {
           ))}
         </div>
         <Spacer y={4} />
-        <Button 
-          type="submit" 
-          color="primary" 
+        <Button
+          type="submit"
+          color="primary"
           onClick={createUpdateTask}
           fullWidth
         >

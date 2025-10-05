@@ -7,7 +7,7 @@ import { useAppContext } from "../AppProvider";
 const TaskListScreen: React.FC = () => {
   const { state, api } = useAppContext();
 
-  // Fetch task lists when the component mounts
+  // Fetch ToDo lists when the component mounts
   useEffect(() => {
     if (null == state.taskLists) {
       api.fetchTaskLists();
@@ -23,20 +23,20 @@ const TaskListScreen: React.FC = () => {
 
   const handleSelectTaskList = (taskListId: string | undefined) => {
     navigate(`/task-lists/${taskListId}`);
-    console.log(`Navigating to task list ${taskListId}`);
+    console.log(`Navigating to ToDo list ${taskListId}`);
   };
 
   return (
     <div className="p-4 max-w-sm w-full">
-      <h1 className="text-2xl font-bold mb-4 pr-2">My Task Lists</h1>
+      <h1 className="text-2xl font-bold mb-4 pr-2">My ToDo Lists</h1>
       <Button
         onPress={handleCreateTaskList}
         color="primary"
         startContent={<Plus size={20} aria-hidden="true" />}
         className="w-full mb-4"
-        aria-label="Create New Task List"
+        aria-label="Create New ToDo List"
       >
-        Create New Task List
+        Create New ToDo List
       </Button>
       {state.taskLists.map((list) => {
         return (
@@ -46,7 +46,7 @@ const TaskListScreen: React.FC = () => {
             onPress={() => handleSelectTaskList(list.id)}
             className="mb-4 w-full"
             role="button"
-            aria-label={`Select task list: ${list.title}`}
+            aria-label={`Select ToDo list: ${list.title}`}
           >
             <CardBody>
               <div className="flex items-center">
