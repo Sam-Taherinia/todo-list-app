@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is the frontend UI for a ToDo list web application built with React, TypeScript, and Vite. The application provides a modern, responsive interface for managing ToDo lists and individual tasks, with a clean architecture that communicates with a Spring Boot backend via REST APIs.
+This is the React TypeScript frontend for a full-stack ToDo list web application. The frontend provides a modern, responsive interface for managing ToDo lists and individual tasks, communicating with a Spring Boot backend via REST APIs. The application is fully implemented with complete CRUD functionality.
 
 **Technology Stack:**
 
@@ -49,10 +49,25 @@ The application follows a well-structured React architecture with clear separati
 
 ### Component Structure
 
-- **TaskListsScreen**: Main dashboard showing all ToDo lists
-- **TasksScreen**: Individual ToDo list view showing tasks
-- **CreateUpdateTaskListScreen**: Form for creating/editing ToDo lists
-- **CreateUpdateTaskScreen**: Form for creating/editing individual tasks
+- **TaskListsScreen**: Main dashboard showing all task lists with CRUD operations
+- **TasksScreen**: Individual task list view with task management
+- **CreateUpdateTaskListScreen**: Form component for creating/editing task lists
+- **CreateUpdateTaskScreen**: Form component for creating/editing tasks
+- **App.tsx**: Main routing configuration with React Router DOM
+- **AppProvider.tsx**: Global state management with Context API
+
+### Current Implementation Status
+
+✅ **Fully Implemented Features:**
+- Complete task list CRUD (Create, Read, Update, Delete)
+- Complete task CRUD within lists
+- Task priority management (HIGH, MEDIUM, LOW)
+- Task status tracking (OPEN, CLOSED)
+- Due date functionality
+- Responsive UI with NextUI components
+- Global state management with automatic API synchronization
+- Client-side routing with React Router DOM
+- Form validation and error handling
 
 ### API Integration
 
@@ -109,6 +124,16 @@ npm run lint -- --fix
 npm run format
 ```
 
+### Docker Development
+
+```powershell
+# Build and run frontend in Docker container
+docker-compose up --build
+
+# Frontend will be available on http://localhost:5173
+# Docker container includes host.docker.internal mapping for backend communication
+```
+
 ### Testing
 
 ```powershell
@@ -129,9 +154,12 @@ npm test -- --watch
 
 ## Development Workflow
 
-### Backend Dependency
+### Backend Integration
 
-The frontend requires the Spring Boot backend to be running on `http://localhost:8080` for full functionality. The Vite dev server is configured to proxy API requests automatically.
+- **API Base URL**: The frontend expects the Spring Boot backend at `http://localhost:8080`
+- **Proxy Configuration**: Vite dev server automatically proxies `/api/*` requests to the backend
+- **CORS**: Backend is configured to accept requests from the frontend origin
+- **Data Flow**: All state changes go through API calls that automatically update the global state
 
 ### State Management Pattern
 
@@ -149,22 +177,24 @@ The frontend requires the Spring Boot backend to be running on `http://localhost
 - `/task-lists/:listId/new-task` - Create new task in list
 - `/task-lists/:listId/edit-task/:taskId` - Edit specific task
 
-## API Endpoints Expected
+## Backend API Integration
 
-The frontend expects these REST API endpoints from the backend:
+The frontend integrates with these Spring Boot backend endpoints:
 
-### ToDo Lists
+### Task Lists API
 
-- `GET /api/task-lists` - Fetch all ToDo lists
-- `GET /api/task-lists/:id` - Get specific ToDo list
-- `POST /api/task-lists` - Create new ToDo list
-- `PUT /api/task-lists/:id` - Update ToDo list
-- `DELETE /api/task-lists/:id` - Delete ToDo list
+- `GET /task-lists` - Fetch all task lists (proxied via `/api/task-lists`)
+- `GET /task-lists/{id}` - Get specific task list by UUID
+- `POST /task-lists` - Create new task list
+- `PUT /task-lists/{id}` - Update existing task list
+- `DELETE /task-lists/{id}` - Delete task list
 
-### Tasks
+### Tasks API
 
-- `GET /api/task-lists/:listId/tasks` - Fetch tasks in a list
-- `GET /api/task-lists/:listId/tasks/:taskId` - Get specific task
-- `POST /api/task-lists/:listId/tasks` - Create new task
-- `PUT /api/task-lists/:listId/tasks/:taskId` - Update task
-- `DELETE /api/task-lists/:listId/tasks/:taskId` - Delete task
+- `GET /task-lists/{listId}/tasks` - Fetch all tasks in a specific list
+- `GET /task-lists/{listId}/tasks/{taskId}` - Get specific task
+- `POST /task-lists/{listId}/tasks` - Create new task in list
+- `PUT /task-lists/{listId}/tasks/{taskId}` - Update existing task
+- `DELETE /task-lists/{listId}/tasks/{taskId}` - Delete specific task
+
+**Note**: All API calls are automatically proxied from `/api/*` to `http://localhost:8080/*` during development.
