@@ -32,6 +32,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByTaskListId(taskListId);
     }
 
+    @Transactional
     @Override
     public Task createTask(UUID taskListId, Task task) {
         if (null != task.getId()) {
@@ -68,6 +69,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByTaskListIdAndId(taskListId, taskId);
     }
 
+    @Transactional
     @Override
     public Task updateTask(UUID taskListId, UUID taskId, Task task) {
         if (null == task.getId()) {
@@ -95,7 +97,9 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(existingTask);
     }
 
-    @Transactional
+    @Transactional // it insures the delete operation happens within a database transaction
+    // so if any part of the delete operation fails, then the entire operation rolls back.
+    // that is to maintain database consistency even if errors occur
     @Override
     public void deleteTask(UUID taskListId, UUID taskId) {
         taskRepository.deleteByTaskListIdAndId(taskListId, taskId);
