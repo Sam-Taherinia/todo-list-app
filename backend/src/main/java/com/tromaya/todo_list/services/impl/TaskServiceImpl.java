@@ -7,6 +7,7 @@ import com.tromaya.todo_list.domain.entities.TaskStatus;
 import com.tromaya.todo_list.repositories.TaskListRepository;
 import com.tromaya.todo_list.repositories.TaskRepository;
 import com.tromaya.todo_list.services.TaskService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -94,6 +95,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(existingTask);
     }
 
+    @Transactional
     @Override
     public void deleteTask(UUID taskListId, UUID taskId) {
         taskRepository.deleteByTaskListIdAndId(taskListId, taskId);
