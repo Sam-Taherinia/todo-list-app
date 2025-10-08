@@ -1,6 +1,7 @@
 package com.tromaya.todo_list.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,6 +10,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "task_lists")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TaskList {
 
     @Id
@@ -33,66 +38,6 @@ public class TaskList {
 
     @Column(name = "updated", nullable = false)
     private LocalDateTime updatedDate;
-
-    public TaskList() {
-    }
-
-    public TaskList(UUID id, String title, String description, List<Task> tasks, LocalDateTime createdDate, LocalDateTime updatedDate) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.tasks = tasks;
-        this.createdDate = createdDate;
-        this.updatedDate = updatedDate;
-    }
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
 
     @Override
     public boolean equals(Object o) {

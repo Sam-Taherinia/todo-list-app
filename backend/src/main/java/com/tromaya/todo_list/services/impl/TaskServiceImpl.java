@@ -75,7 +75,7 @@ public class TaskServiceImpl implements TaskService {
         if (null == task.getId()) {
             throw new IllegalArgumentException("Task id is empty!");
         }
-        if (Objects.equals(task.getId(), taskId)) {
+        if (!Objects.equals(task.getId(), taskId)) {
             throw new IllegalArgumentException("Task ID do not  match!");
         }
         if (null == task.getPriority()) {
